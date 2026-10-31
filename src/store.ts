@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { createMatch } from './lib/scoring'
+import { createMatch, upgradeMatch } from './lib/scoring'
 import type { GameEntry, GameId, Match } from './lib/scoring'
 
 export interface Persisted {
@@ -14,7 +14,10 @@ function load(): Persisted {
     const raw = localStorage.getItem(KEY)
     if (!raw) return { current: null, history: [] }
     const parsed = JSON.parse(raw) as Partial<Persisted>
-    return { current: parsed.current ?? null, history: parsed.history ?? [] }
+    return {
+      current: parsed.current ? upgradeMatch(parsed.current) : null,
+      history: (parsed.history ?? []).map(upgradeMatch),
+    }
   } catch {
     return { current: null, history: [] }
   }

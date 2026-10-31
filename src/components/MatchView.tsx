@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { GAMES, gameStatus, isComplete } from '../lib/scoring'
 import type { GameEntry, GameId, Match } from '../lib/scoring'
+import { useMessages } from '../i18n/messages'
 import { GameForm } from './GameForm'
+import { GameGlyph } from './GameSymbol'
 import { ScoreTable } from './ScoreTable'
 
 interface Props {
@@ -11,28 +13,33 @@ interface Props {
   onDiscard: () => void
 }
 
-const DOT = { empty: 'bg-slate-600', ok: 'bg-emerald-400', off: 'bg-red-400' }
+const DOT = { empty: 'bg-transparent', ok: 'bg-emerald-400', off: 'bg-red-400' }
 
 export function MatchView({ match, onChange, onFinish, onDiscard }: Props) {
+  const t = useMessages()
   const [active, setActive] = useState<GameId>('trebol')
   const game = GAMES.find((g) => g.id === active)!
   const complete = isComplete(match)
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-3 gap-1.5">
+      <div className="grid grid-cols-6 gap-1.5">
         {GAMES.map((g, i) => (
           <button
             key={g.id}
             type="button"
             onClick={() => setActive(g.id)}
             aria-pressed={active === g.id}
-            className={`flex items-center justify-center gap-1.5 rounded-lg px-1 py-2 text-sm ${
-              active === g.id ? 'bg-emerald-800 text-white' : 'bg-slate-800 text-slate-300'
+            aria-label={`${i + 1}. ${t.games[g.id]}`}
+            title={t.games[g.id]}
+            className={`relative flex h-12 items-center justify-center rounded-lg text-sm font-medium ${
+              active === g.id ? 'bg-emerald-700 text-white' : 'bg-raised'
             }`}
           >
-            <span className={`size-2 rounded-full ${DOT[gameStatus(g, match.entries[g.id]).state]}`} />
-            {i + 1}. {g.name}
+            <GameGlyph id={g.id} />
+            <span
+              className={`absolute top-1 right-1 size-2 rounded-full ${DOT[gameStatus(g, match.entries[g.id]).state]}`}
+            />
           </button>
         ))}
       </div>
@@ -53,16 +60,16 @@ export function MatchView({ match, onChange, onFinish, onDiscard }: Props) {
           onClick={onFinish}
           className="flex-1 rounded-xl bg-emerald-600 py-3 font-semibold text-white disabled:opacity-40"
         >
-          Terminar partida
+          {t.finish}
         </button>
         <button
           type="button"
           onClick={() => {
-            if (window.confirm('¿Descartar esta partida? No queda en el historial.')) onDiscard()
+            if (window.confirm(t.discardConfirm)) onDiscard()
           }}
-          className="rounded-xl bg-slate-800 px-4 py-3 text-slate-300"
+          className="rounded-xl bg-surface px-4 py-3 text-muted"
         >
-          Descartar
+          {t.discard}
         </button>
       </div>
     </div>
