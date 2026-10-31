@@ -35,7 +35,7 @@ async function renderMaskable(size, out, background) {
   console.log('wrote', out)
 }
 
-const bg = { r: 6, g: 78, b: 59, alpha: 1 }
+const bg = { r: 4, g: 120, b: 87, alpha: 1 }
 
 await render(192, 'pwa-192x192.png')
 await render(512, 'pwa-512x512.png')

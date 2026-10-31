@@ -11,14 +11,16 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
+      useCredentials: true,
+      devOptions: { enabled: true, type: 'module' },
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
         name: 'Cocktail',
         short_name: 'Cocktail',
         description: 'Contador de puntos del Cocktail, el juego de naipes.',
         lang: 'es',
-        theme_color: '#064e3b',
-        background_color: '#0f172a',
+        theme_color: '#047857',
+        background_color: '#17181c',
         display: 'standalone',
         orientation: 'portrait',
         icons: [
