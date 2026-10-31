@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { formatPoints, matchTotals } from '../lib/scoring'
 import type { Match } from '../lib/scoring'
+import { useLocale, useMessages } from '../i18n/messages'
 import { ScoreTable } from './ScoreTable'
 
 interface Props {
@@ -8,13 +9,14 @@ interface Props {
   onRemove: (id: string) => void
 }
 
-const date = new Intl.DateTimeFormat('es-CL', { dateStyle: 'medium', timeStyle: 'short' })
-
 export function History({ matches, onRemove }: Props) {
+  const t = useMessages()
+  const locale = useLocale()
+  const date = new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' })
   const [open, setOpen] = useState<string | null>(null)
 
   if (matches.length === 0) {
-    return <p className="text-slate-400">Todavía no hay partidas terminadas.</p>
+    return <p className="text-muted">{t.emptyHistory}</p>
   }
 
   return (
@@ -27,9 +29,9 @@ export function History({ matches, onRemove }: Props) {
               type="button"
               aria-expanded={open === match.id}
               onClick={() => setOpen(open === match.id ? null : match.id)}
-              className="rounded-xl bg-slate-800 p-3 text-left"
+              className="rounded-xl bg-surface p-3 text-left"
             >
-              <span className="block text-xs text-slate-400">
+              <span className="block text-xs text-muted">
                 {date.format(match.finishedAt ?? match.createdAt)}
               </span>
               <span className="block text-sm">
@@ -42,11 +44,11 @@ export function History({ matches, onRemove }: Props) {
                 <button
                   type="button"
                   onClick={() => {
-                    if (window.confirm('¿Borrar esta partida del historial?')) onRemove(match.id)
+                    if (window.confirm(t.removeConfirm)) onRemove(match.id)
                   }}
-                  className="self-end rounded-lg px-3 py-1.5 text-sm text-red-400"
+                  className="self-end rounded-lg px-3 py-1.5 text-sm text-bad"
                 >
-                  Borrar
+                  {t.remove}
                 </button>
               </>
             )}
