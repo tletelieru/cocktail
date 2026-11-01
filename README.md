@@ -15,3 +15,7 @@ pnpm lint && pnpm test && pnpm build
 ## Deploy
 
 Al publicar en `tletelieru/cocktail`, cada push a `main` despliega en <https://tletelieru.github.io/cocktail/>. Requiere Pages con source "GitHub Actions".
+
+## Licencia
+
+[MIT](LICENSE)
