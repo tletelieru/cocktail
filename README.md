@@ -18,4 +18,4 @@ Al publicar en `tletelieru/cocktail`, cada push a `main` despliega en <https://t
 
 ## Licencia
 
-[MIT](LICENSE)
+Todos los derechos reservados. Ver [LICENSE](LICENSE).
