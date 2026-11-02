@@ -41,7 +41,7 @@ describe('App', () => {
     await user.click(screen.getByRole('button', { name: '7♣ de Ana' }))
     await user.click(screen.getByRole('button', { name: 'Última de Ana' }))
     expect(screen.getByRole('status').textContent).toContain('faltan 120')
-    const more = screen.getByRole('button', { name: 'Basas Ana más' })
+    const more = screen.getByRole('button', { name: 'Bazas Ana más' })
     for (let i = 0; i < 13; i++) await user.click(more)
     expect(more).toHaveProperty('disabled', true)
     const status = screen.getByRole('status').textContent
@@ -51,13 +51,13 @@ describe('App', () => {
 
   it('blocks adding once a count is fully assigned and frees it when lowered', async () => {
     const user = await startFour()
-    const ana = screen.getByRole('button', { name: 'Basas Ana más' })
-    const other = screen.getByRole('button', { name: 'Basas Jugador 2 más' })
+    const ana = screen.getByRole('button', { name: 'Bazas Ana más' })
+    const other = screen.getByRole('button', { name: 'Bazas Jugador 2 más' })
     for (let i = 0; i < 12; i++) await user.click(ana)
     await user.click(other)
     expect(ana).toHaveProperty('disabled', true)
     expect(other).toHaveProperty('disabled', true)
-    await user.click(screen.getByRole('button', { name: 'Basas Ana menos' }))
+    await user.click(screen.getByRole('button', { name: 'Bazas Ana menos' }))
     expect(other).toHaveProperty('disabled', false)
   })
 
@@ -92,7 +92,7 @@ describe('App', () => {
       await user.click(screen.getByRole('button', { name: `Q${suit} de Ana` }))
     }
     expect(screen.getByRole('status').textContent).toContain('−220 /')
-    await user.click(screen.getByRole('button', { name: 'Basas Ana menos' }))
+    await user.click(screen.getByRole('button', { name: 'Bazas Ana menos' }))
     expect(screen.getByRole('status').textContent).toContain('−220 /')
     await user.click(screen.getByRole('button', { name: 'Última de Jugador 2' }))
     expect(screen.getByRole('status').textContent).toContain('−280 /')
@@ -100,7 +100,7 @@ describe('App', () => {
 
   it('blocks a mark when no tricks are left to hold it', async () => {
     const user = await startFour()
-    const more = screen.getByRole('button', { name: 'Basas Ana más' })
+    const more = screen.getByRole('button', { name: 'Bazas Ana más' })
     for (let i = 0; i < 13; i++) await user.click(more)
     expect(screen.getByRole('button', { name: '7♣ de Jugador 2' })).toHaveProperty('disabled', true)
     expect(screen.getByRole('button', { name: '7♣ de Ana' })).toHaveProperty('disabled', false)

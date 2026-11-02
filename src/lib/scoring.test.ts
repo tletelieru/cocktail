@@ -210,7 +210,7 @@ describe('format', () => {
   })
 
   it('summarizes a rule', () => {
-    expect(ruleSummary(game('trebol'), messages.es.rule)).toBe('Basa −10 · 7♣ −150 · Última −50')
+    expect(ruleSummary(game('trebol'), messages.es.rule)).toBe('Baza −10 · 7♣ −150 · Última −50')
     expect(ruleSummary(game('domino'), messages.es.rule)).toBe('Ganador +300 · Demás −10 por carta')
   })
 })
